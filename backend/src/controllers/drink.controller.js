@@ -4,7 +4,7 @@ export class DrinkController {
   async createDrink(req, res) {
     try {
       const userId = req.user?.email;
-      const { type, notes } = req.body;
+      const { type, notes, location } = req.body;
       console.log(type, notes);
       if (!userId) {
         return res.status(400).json({ message: 'User is required' });
@@ -12,7 +12,7 @@ export class DrinkController {
       if (!type) {
         return res.status(400).json({ message: 'Drink type is required' })
       }
-      const drink = await DrinkService.addDrink(userId, type, notes);
+      const drink = await DrinkService.addDrink(userId, type, notes, location);
       return res.status(201).json(drink);
     } catch (error) {
       console.error('Error creating drink:', error);

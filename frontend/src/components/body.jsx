@@ -33,10 +33,42 @@ function BodyComponent() {
   const [error, setError] = useState(null);
   const [drinkType, setDrinkType] = useState('Beer');
   const [drinkNotes, setDrinkNotes] = useState('');
+  const [location, setLocation] = useState({
+    latitude: null,
+    longitude: null,
+    error: null,
+  });
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            error: null,
+          });
+        },
+        (error) => {
+          setLocation({
+            latitude: null,
+            longitude: null,
+            error: error.message,
+          });
+        }
+      );
+    } else {
+      setLocation({
+        latitude: null,
+        longitude: null,
+        error: 'Geolocation is not supported by this browser.',
+      });
+    }
+  };
 
   useEffect(() => {
     let cancelRequest = false;
-
+    getLocation();
     const loadDrinkCounts = async () => {
       setLoading(true);
       try {
@@ -69,7 +101,7 @@ function BodyComponent() {
 
   const incrementDrink = async (email, drinkType, drinkNotes) => {
     try {
-      await createDrink(email, drinkType, drinkNotes);
+      await createDrink(drinkType, drinkNotes, location);
       setDrinkCounters((prevCounters) =>
         prevCounters.map((counter) =>
           counter.email === email

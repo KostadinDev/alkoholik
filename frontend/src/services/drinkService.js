@@ -59,8 +59,12 @@ export const fetchDrinksByUser = async (userId, month = null) => {
 };
 
 // Function to create a new drink
-export const createDrink = async (userId, type, notes) => {
-  return postData('drinks', { userId, type, notes });
+export const createDrink = async (type, notes, location) => {
+  const formattedLocation = { ...location };
+  if (formattedLocation.error === null) {
+    delete formattedLocation.error;
+  }
+  return postData('drinks', { type, notes, location: formattedLocation });
 };
 
 // Function to fetch a drink by ID
