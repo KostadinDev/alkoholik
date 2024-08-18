@@ -3,8 +3,14 @@ import DrinkCounter from './drink-counter';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { fetchDrinksByUser, createDrink } from '../services/drinkService'; // Import the API functions
+import { useUser } from "../context/user.context";
+
+const kostadinEmail = 'kostadin.g.devedzhiev@gmail.com';
 
 function BodyComponent() {
+
+  const { user, setUser } = useUser();
+
   // Calculate the current date and month/year outside of useEffect
   const now = useMemo(() => new Date(), []);
   const options = { year: 'numeric', month: 'long' };
@@ -14,7 +20,7 @@ function BodyComponent() {
   // Initialize state with drinkCounters
   const [drinkCounters, setDrinkCounters] = useState([
     { title: 'Ivan', count: 0 },
-    { title: 'Kosta', count: 0 },
+    { title: kostadinEmail, count: 0 },
   ]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,11 +32,11 @@ function BodyComponent() {
       setLoading(true);
       try {
         const ivanDrinks = await fetchDrinksByUser('Ivan');
-        const kostaDrinks = await fetchDrinksByUser('Kosta');
+        const kostaDrinks = await fetchDrinksByUser(kostadinEmail);
         if (!cancelRequest) {
           setDrinkCounters([
             { title: 'Ivan', count: ivanDrinks?.length },
-            { title: 'Kosta', count: kostaDrinks?.length },
+            { title: kostadinEmail, count: kostaDrinks?.length },
           ]);
         }
       } catch (err) {
@@ -93,7 +99,7 @@ function BodyComponent() {
             icon={<PlusOutlined />}
             size="large"
             className="w-full max-w-[40%] mt-4"
-            onClick={() => incrementDrink('Ivan')} // Change to 'Kosta' if needed
+            onClick={() => incrementDrink(user?.email)} // Change to 'Kosta' if needed
           >
             Add Drink
           </Button>

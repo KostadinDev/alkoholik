@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { handleLogout, handleLoginSuccess } from "../services/authService";
 import { GoogleLogin } from "@react-oauth/google";
 import { Avatar, Button } from "antd";
+import { useUser } from "../context/user.context";
 
 const Header = () => {
 
-  const [user, setUser] = useState();
+  const { user, setUser } = useUser();
 
   const onLoginSuccess = async (credentialResponse) => {
-    console.log(credentialResponse);
     const token = credentialResponse.credential;
     const user = await handleLoginSuccess(token);
     setUser(user);
