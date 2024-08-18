@@ -59,8 +59,8 @@ export const fetchDrinksByUser = async (userId, month = null) => {
 };
 
 // Function to create a new drink
-export const createDrink = async (userId) => {
-  return postData('drinks', { userId });
+export const createDrink = async (userId, type, notes) => {
+  return postData('drinks', { userId, type, notes });
 };
 
 // Function to fetch a drink by ID
