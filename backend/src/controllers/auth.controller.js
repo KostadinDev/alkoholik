@@ -13,7 +13,7 @@ const client = new OAuth2Client(CLIENT_ID);
 class AuthController {
   async googleLogin(req, res) {
     const { token } = req.body;
-
+    console.log("google login token: ", token), CLIENT_ID;
     try {
       // Verify the Google token
       const ticket = await client.verifyIdToken({
@@ -23,7 +23,7 @@ class AuthController {
 
       const payload = ticket.getPayload();
       const googleId = payload?.sub;
-      console.log(payload);
+      console.log('payload', payload);
 
       if (!googleId) {
         throw new Error('Invalid Google ID');

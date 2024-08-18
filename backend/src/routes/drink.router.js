@@ -4,7 +4,7 @@ import { authenticateToken } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.use(authenticateToken);
+// router.use(authenticateToken);
 
 // Create a new drink
 router.post('/drinks', drinkController.createDrink);
