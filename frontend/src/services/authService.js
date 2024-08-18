@@ -2,7 +2,7 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
 
-const BASE_URL = `https://alkoholik.onrender.com/api`;
+const BASE_URL = `https://alkoholik-backend.onrender.com/api`;
 export const fetchUser = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/auth/user`, { withCredentials: true });

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for API requests
-const BASE_URL = 'https://alkoholik.onrender.com/api';
+const BASE_URL = 'https://alkoholik-backend.onrender.com/api';
 
 // Helper function to handle GET requests
 export const fetchData = async (endpoint, params = {}) => {
