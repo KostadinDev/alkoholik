@@ -1,0 +1,1 @@
+export const EMAIL_WHITELIST = ['kostadin.g.devedzhiev@gmail.com'];
