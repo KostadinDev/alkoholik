@@ -1,11 +1,10 @@
 import React from 'react';
 import { Card } from 'antd';
-
+const TOTAL_ALLOWED = 12;
 function DrinkCounter({ title, count }) {
-  const totalAllowed = 12;
   return (
     <Card title={title} bordered={false} style={{ width: 300 }}>
-      <span>{count} / {totalAllowed} </span>
+      <span>{count} / {TOTAL_ALLOWED} </span>
     </Card>
   );
 }

@@ -43,7 +43,6 @@ class DrinkRepository {
           $lt: endOfMonth
         };
       }
-      console.log(query);
       return await Drink.find(query); // Query drinks by user ID and optional month filter
     } catch (error) {
       console.error('Error fetching drinks by user:', error);

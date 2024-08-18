@@ -5,7 +5,6 @@ export class DrinkController {
     try {
       const userId = req.user?.email;
       const { type, notes, location } = req.body;
-      console.log(type, notes);
       if (!userId) {
         return res.status(400).json({ message: 'User is required' });
       }
@@ -37,7 +36,6 @@ export class DrinkController {
   async getDrinks(req, res) {
     try {
       const { month, userId } = req.query; // Get month from query parameters
-      console.log(userId, month, 'DSADDSADASD');
       if (!userId) {
         return res.status(400).json({ message: 'User ID is required' });
       }
