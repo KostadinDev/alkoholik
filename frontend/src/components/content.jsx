@@ -1,6 +1,7 @@
 import React from 'react';
 import BodyComponent from './body';
 import Header from './header';
+import LoginPrompt from './login-prompt';
 import { useUser } from '../context/user.context';
 
 const Content = () => {
@@ -11,7 +12,7 @@ const Content = () => {
         <Header />
       </header>
       <main className="pt-16 flex-1 p-4 bg-gray-100">
-        {user ? <BodyComponent /> : <></>}
+        {user ? <BodyComponent /> : <LoginPrompt />}
       </main>
     </div>
   );
