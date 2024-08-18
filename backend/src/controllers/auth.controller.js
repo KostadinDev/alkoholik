@@ -58,7 +58,7 @@ class AuthController {
       res.cookie('token', appToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        sameSite: 'lax',
       });
 
       res.status(200).send('Login successful');
