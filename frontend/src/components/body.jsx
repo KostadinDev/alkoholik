@@ -4,11 +4,10 @@ import { useUser } from "../context/user.context";
 import DrinkForm from './drink-form';
 import DrinkTable from './drink-table';
 import useLocation from './location';
+import { kostadinEmail, ivanEmail } from '../constants/auth.constants';
 
 // Constants
 const MAX_ALLOWED_DRINKS = 12;
-const kostadinEmail = 'kostadin.g.devedzhiev@gmail.com';
-const ivanEmail = 'ivannikolov007@gmail.com';
 
 function BodyComponent() {
   const { user } = useUser();
