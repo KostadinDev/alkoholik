@@ -29,23 +29,15 @@ export class DrinkController {
     }
   }
 
-  async getAllDrinks(req, res) {
+  async getDrinks(req, res) {
     try {
-      const drinks = await DrinkService.listAllDrinks();
-      return res.status(200).json(drinks);
-    } catch (error) {
-      console.error('Error fetching all drinks:', error);
-      return res.status(500).json({ message: 'Internal Server Error' });
-    }
-  }
-
-  async getDrinksByUser(req, res) {
-    try {
-      const { userId } = req.params; // Get userId from route parameters
+      const { month, userId } = req.query; // Get month from query parameters
+      console.log(userId, month, 'DSADDSADASD');
       if (!userId) {
         return res.status(400).json({ message: 'User ID is required' });
       }
-      const drinks = await DrinkService.listDrinksByUser(userId);
+
+      const drinks = await DrinkService.listDrinksByUser(userId, month);
       return res.status(200).json(drinks);
     } catch (error) {
       console.error('Error fetching drinks by user:', error);

@@ -29,9 +29,22 @@ class DrinkRepository {
     }
   }
 
-  async getAllDrinksByUser(user) {
+  async getAllDrinksByUser(userId, month = null) {
     try {
-      return await Drink.find({ user });
+      const query = { user: userId };
+
+      if (month) {
+        const startOfMonth = new Date(month);
+        const endOfMonth = new Date(startOfMonth);
+        endOfMonth.setMonth(startOfMonth.getMonth() + 1);
+
+        query.timestamp = {
+          $gte: startOfMonth,
+          $lt: endOfMonth
+        };
+      }
+      console.log(query);
+      return await Drink.find(query); // Query drinks by user ID and optional month filter
     } catch (error) {
       console.error('Error fetching drinks by user:', error);
       throw error;
@@ -52,15 +65,6 @@ class DrinkRepository {
       return await Drink.findByIdAndDelete(id);
     } catch (error) {
       console.error('Error deleting drink:', error);
-      throw error;
-    }
-  }
-
-  async getDrinksByUser(userId) {
-    try {
-      return await Drink.find({ user: userId }); // Query drinks by user ID
-    } catch (error) {
-      console.error('Error fetching drinks by user:', error);
       throw error;
     }
   }

@@ -34,9 +34,9 @@ class DrinkService {
     }
   }
 
-  async listDrinksByUser(userId) {
+  async listDrinksByUser(userId, month = null) {
     try {
-      const drinks = await DrinkRepository.getDrinksByUser(userId); // Call to repository method
+      const drinks = await DrinkRepository.getAllDrinksByUser(userId, month); // Pass month parameter to repository method
       return drinks;
     } catch (error) {
       console.error('Error listing drinks by user:', error);

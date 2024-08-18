@@ -11,11 +11,15 @@ function BodyComponent() {
 
   const { user, setUser } = useUser();
 
-  // Calculate the current date and month/year outside of useEffect
+  // Calculate the current UTC date and month
   const now = useMemo(() => new Date(), []);
+
+  // Format the month for API requests (YYYY-MM)
+  const monthForApi = useMemo(() => now.toISOString().slice(0, 7), [now]);
+
+  // Format the month for display (e.g., "August 2024")
   const options = { year: 'numeric', month: 'long' };
-  const month = useMemo(() => now.toLocaleDateString('en-US', options), [now]);
-  const year = useMemo(() => now.getFullYear(), [now]);
+  const monthDisplay = useMemo(() => now.toLocaleDateString('en-US', options), [now]);
 
   // Initialize state with drinkCounters
   const [drinkCounters, setDrinkCounters] = useState([
@@ -31,12 +35,13 @@ function BodyComponent() {
     const loadDrinkCounts = async () => {
       setLoading(true);
       try {
-        const ivanDrinks = await fetchDrinksByUser('Ivan');
-        const kostaDrinks = await fetchDrinksByUser(kostadinEmail);
+        // Fetch drinks by user with month filter
+        const ivanDrinks = await fetchDrinksByUser('Ivan', monthForApi);
+        const kostaDrinks = await fetchDrinksByUser(kostadinEmail, monthForApi);
         if (!cancelRequest) {
           setDrinkCounters([
-            { title: 'Ivan', count: ivanDrinks?.length },
-            { title: kostadinEmail, count: kostaDrinks?.length },
+            { title: 'Ivan', count: ivanDrinks?.length || 0 },
+            { title: kostadinEmail, count: kostaDrinks?.length || 0 },
           ]);
         }
       } catch (err) {
@@ -56,11 +61,10 @@ function BodyComponent() {
     return () => {
       cancelRequest = true;
     };
-  }, [now, year]); // Dependency array remains unchanged
+  }, [monthForApi]); // Use 'monthForApi' as dependency to update when month changes
 
   // Increment drink count for a specific person
   const incrementDrink = async (title) => {
-
     // Call the API to create a new drink entry
     try {
       await createDrink(title); // Call the createDrink function
@@ -78,7 +82,7 @@ function BodyComponent() {
 
   return (
     <div className="flex flex-col gap-6 items-center p-4">
-      <span className="text-lg font-semibold">{month}</span>
+      <span className="text-lg font-semibold">{monthDisplay}</span>
       {loading ? (
         <p>Loading...</p>
       ) : (

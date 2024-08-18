@@ -48,14 +48,14 @@ export const deleteData = async (endpoint) => {
 };
 
 // Function to fetch all drinks (with optional user, month, and year parameters)
-export const fetchDrinks = async (userId, month, year) => {
-  const params = { userId, month, year };
+export const fetchDrinks = async (userId, month = null) => {
+  const params = { userId, month };
   return fetchData('drinks', params);
 };
 
-// Function to fetch drinks by user ID
-export const fetchDrinksByUser = async (userId) => {
-  return fetchData(`drinks/user/${userId}`);
+// Function to fetch drinks by user ID with optional month filter
+export const fetchDrinksByUser = async (userId, month = null) => {
+  return fetchDrinks(userId, month);
 };
 
 // Function to create a new drink
