@@ -92,7 +92,7 @@ function BodyComponent() {
             shape="round"
             icon={<PlusOutlined />}
             size="large"
-            className="w-full max-w-[25%] mt-4"
+            className="w-full max-w-[40%] mt-4"
             onClick={() => incrementDrink('Ivan')} // Change to 'Kosta' if needed
           >
             Add Drink
