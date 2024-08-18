@@ -23,8 +23,8 @@ function BodyComponent() {
 
   // Initialize state with drinkCounters
   const [drinkCounters, setDrinkCounters] = useState([
-    { title: 'Ivan', count: 0 },
-    { title: kostadinEmail, count: 0 },
+    { title: 'Ivan', count: 0, email: 'Ivan' },
+    { title: kostadinEmail, count: 0, email: kostadinEmail },
   ]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -40,8 +40,8 @@ function BodyComponent() {
         const kostaDrinks = await fetchDrinksByUser(kostadinEmail, monthForApi);
         if (!cancelRequest) {
           setDrinkCounters([
-            { title: 'Ivan', count: ivanDrinks?.length || 0 },
-            { title: kostadinEmail, count: kostaDrinks?.length || 0 },
+            { title: 'Ivan', email: 'Ivan', count: ivanDrinks?.length || 0 },
+            { title: 'Kostadin', email: kostadinEmail, count: kostaDrinks?.length || 0 },
           ]);
         }
       } catch (err) {
@@ -64,13 +64,13 @@ function BodyComponent() {
   }, [monthForApi]); // Use 'monthForApi' as dependency to update when month changes
 
   // Increment drink count for a specific person
-  const incrementDrink = async (title) => {
+  const incrementDrink = async (email) => {
     // Call the API to create a new drink entry
     try {
-      await createDrink(title); // Call the createDrink function
+      await createDrink(email); // Call the createDrink function
       setDrinkCounters((prevCounters) =>
         prevCounters.map((counter) =>
-          counter.title === title
+          counter.email === email
             ? { ...counter, count: counter.count + 1 }
             : counter
         )
@@ -102,8 +102,8 @@ function BodyComponent() {
             shape="round"
             icon={<PlusOutlined />}
             size="large"
-            className="w-full max-w-[40%] mt-4"
-            onClick={() => incrementDrink(user?.email)} // Change to 'Kosta' if needed
+            className="w-full w-[40%] max-w-[150px] mt-4"
+            onClick={() => incrementDrink(user?.email)}
           >
             Add Drink
           </Button>
