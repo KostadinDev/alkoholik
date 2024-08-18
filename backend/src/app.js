@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import drinkRouter from "./routes/drink.router.js"
+import drinkRouter from "./routes/drink.router.js";
+import authRouter from "./routes/auth.routes.js";
 
 dotenv.config(); // Load environment variables
 
@@ -16,6 +17,7 @@ app.use(morgan("dev"));
 
 
 // Use the drink routes
+app.use(authRouter);
 app.use('/api', drinkRouter);
 
 app.use((err, req, res, next) => {
