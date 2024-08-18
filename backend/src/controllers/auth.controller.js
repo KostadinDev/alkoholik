@@ -23,6 +23,7 @@ class AuthController {
 
       const payload = ticket.getPayload();
       const googleId = payload?.sub;
+      console.log(payload);
 
       if (!googleId) {
         throw new Error('Invalid Google ID');
