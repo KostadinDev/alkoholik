@@ -1,9 +1,9 @@
 import DrinkRepository from "../repositories/drink.repository.js";
 
 class DrinkService {
-  async addDrink(user) {
+  async addDrink(user, type, notes) {
     try {
-      const drink = await DrinkRepository.createDrink(user);
+      const drink = await DrinkRepository.createDrink(user, type, notes);
       return drink;
     } catch (error) {
       console.error('Error adding drink:', error);

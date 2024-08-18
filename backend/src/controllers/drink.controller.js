@@ -3,11 +3,16 @@ import DrinkService from "../services/drink.service.js";
 export class DrinkController {
   async createDrink(req, res) {
     try {
-      const { userId } = req.body;
+      const userId = req.user?.email;
+      const { type, notes } = req.body;
+      console.log(type, notes);
       if (!userId) {
         return res.status(400).json({ message: 'User is required' });
       }
-      const drink = await DrinkService.addDrink(userId);
+      if (!type) {
+        return res.status(400).json({ message: 'Drink type is required' })
+      }
+      const drink = await DrinkService.addDrink(userId, type, notes);
       return res.status(201).json(drink);
     } catch (error) {
       console.error('Error creating drink:', error);
@@ -48,7 +53,7 @@ export class DrinkController {
   async updateDrink(req, res) {
     try {
       const { id } = req.params;
-      const { userId } = req.body;
+      const userId = req.user?.email;
       if (!userId) {
         return res.status(400).json({ message: 'User is required' });
       }

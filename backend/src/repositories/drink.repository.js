@@ -1,9 +1,9 @@
 import Drink from "../mongo/drinks.mongo.js";
 
 class DrinkRepository {
-  async createDrink(user) {
+  async createDrink(user, type, notes) {
     try {
-      const drink = new Drink({ user });
+      const drink = new Drink({ user, type, notes });
       return await drink.save();
     } catch (error) {
       console.error('Error creating drink:', error);
