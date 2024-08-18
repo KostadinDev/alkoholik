@@ -6,11 +6,14 @@ const router = express.Router();
 // Create a new drink
 router.post('/drinks', drinkController.createDrink);
 
+// Get all drinks
+router.get('/drinks', drinkController.getAllDrinks);
+
 // Get a drink by ID
 router.get('/drinks/:id', drinkController.getDrinkById);
 
-// Get all drinks
-router.get('/drinks', drinkController.getAllDrinks);
+// Get drinks by user ID
+router.get('/drinks/user/:userId', drinkController.getDrinksByUser); // Updated route
 
 // Update a drink by ID
 router.put('/drinks/:id', drinkController.updateDrink);

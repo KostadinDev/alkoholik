@@ -1,11 +1,8 @@
-// src/BodyComponent.js
-
 import React, { useState, useEffect, useMemo } from 'react';
 import DrinkCounter from './drink-counter';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import axios from 'axios'; // Import axios for the POST request
-import { fetchDrinks } from '../services/drinks.service'; // Import the API function
+import { fetchDrinksByUser, createDrink } from '../services/drinkService'; // Import the API functions
 
 function BodyComponent() {
   // Calculate the current date and month/year outside of useEffect
@@ -28,14 +25,12 @@ function BodyComponent() {
     const loadDrinkCounts = async () => {
       setLoading(true);
       try {
-        const ivanCount = await fetchDrinks('Ivan', now.getMonth() + 1, year);
-        const kostaCount = await fetchDrinks('Kosta', now.getMonth() + 1, year);
-        console.log(ivanCount, kostaCount)
-
+        const ivanDrinks = await fetchDrinksByUser('Ivan');
+        const kostaDrinks = await fetchDrinksByUser('Kosta');
         if (!cancelRequest) {
           setDrinkCounters([
-            { title: 'Ivan', count: ivanCount?.drinks },
-            { title: 'Kosta', count: kostaCount?.drinks },
+            { title: 'Ivan', count: ivanDrinks?.length },
+            { title: 'Kosta', count: kostaDrinks?.length },
           ]);
         }
       } catch (err) {
@@ -59,24 +54,19 @@ function BodyComponent() {
 
   // Increment drink count for a specific person
   const incrementDrink = async (title) => {
-    setDrinkCounters((prevCounters) =>
-      prevCounters.map((counter) =>
-        counter.title === title
-          ? { ...counter, count: counter.count + 1 }
-          : counter
-      )
-    );
 
-    // Call the API to update the drink count on the server
+    // Call the API to create a new drink entry
     try {
-      await axios.post('http://localhost:8000/drinks', {
-        user: title,
-        month: now.getMonth() + 1,
-        year: year,
-        count: drinkCounters.find((counter) => counter.title === title).count + 1
-      });
+      await createDrink(title); // Call the createDrink function
+      setDrinkCounters((prevCounters) =>
+        prevCounters.map((counter) =>
+          counter.title === title
+            ? { ...counter, count: counter.count + 1 }
+            : counter
+        )
+      );
     } catch (error) {
-      console.error('Failed to update drink count:', error);
+      console.error('Failed to create drink:', error);
     }
   };
 

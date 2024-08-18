@@ -29,6 +29,15 @@ class DrinkRepository {
     }
   }
 
+  async getAllDrinksByUser(user) {
+    try {
+      return await Drink.find({ user });
+    } catch (error) {
+      console.error('Error fetching drinks by user:', error);
+      throw error;
+    }
+  }
+
   async updateDrink(id, user) {
     try {
       return await Drink.findByIdAndUpdate(id, { user }, { new: true });
@@ -43,6 +52,15 @@ class DrinkRepository {
       return await Drink.findByIdAndDelete(id);
     } catch (error) {
       console.error('Error deleting drink:', error);
+      throw error;
+    }
+  }
+
+  async getDrinksByUser(userId) {
+    try {
+      return await Drink.find({ user: userId }); // Query drinks by user ID
+    } catch (error) {
+      console.error('Error fetching drinks by user:', error);
       throw error;
     }
   }
