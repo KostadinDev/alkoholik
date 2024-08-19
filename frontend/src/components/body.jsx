@@ -27,9 +27,11 @@ function BodyComponent() {
     const loadDrinkCounts = async () => {
       setLoading(true);
       try {
-        const ivanDrinks = await fetchDrinksByUser(ivanEmail, monthForApi);
-        const kostaDrinks = await fetchDrinksByUser(kostadinEmail, monthForApi);
-        const boyanDrinks = await fetchDrinksByUser(boyanEmail, monthForApi);
+        const [ivanDrinks, kostaDrinks, boyanDrinks] = await Promise.all([
+          fetchDrinksByUser(ivanEmail, monthForApi),
+          fetchDrinksByUser(kostadinEmail, monthForApi),
+          fetchDrinksByUser(boyanEmail, monthForApi),
+        ]);
 
         if (!cancelRequest) {
           setTableData([
@@ -39,6 +41,7 @@ function BodyComponent() {
           ]);
         }
       } catch (err) {
+        // Handle errors here if needed
       } finally {
         if (!cancelRequest) setLoading(false);
       }
