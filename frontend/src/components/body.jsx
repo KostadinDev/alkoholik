@@ -37,7 +37,7 @@ function BodyComponent() {
           setTableData([
             { key: '1', email: ivanEmail, name: 'Ivan', drinks: ivanDrinks?.length, allowedDrinks: MAX_ALLOWED_DRINKS },
             { key: '2', email: kostadinEmail, name: 'Kostadin', drinks: kostaDrinks?.length, allowedDrinks: MAX_ALLOWED_DRINKS },
-            { key: '3', email: boyanEmail, name: 'Boyan', drinks: boyanDrinks?.length, allowedDrinks: MAX_ALLOWED_DRINKS },
+            { key: '3', email: boyanEmail, name: 'Boyan', drinks: boyanDrinks?.length, allowedDrinks: 'Unlimited' },
           ]);
         }
       } catch (err) {
@@ -67,7 +67,11 @@ function BodyComponent() {
         )
       );
     } catch (error) {
-      console.error('Failed to create drink:', error);
+      messageApi.open({
+        type: 'error',
+        content: JSON.stringify(error),
+        duration: 10,
+      });
     }
   };
 

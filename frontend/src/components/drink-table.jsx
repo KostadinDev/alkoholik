@@ -5,7 +5,7 @@ const DrinkTable = ({ tableData, monthDisplay }) => {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Drinks', dataIndex: 'drinks', key: 'drinks' },
-    { title: 'Maximum Allowed', dataIndex: 'allowedDrinks', key: 'allowedDrinks' }
+    { title: 'Maximum', dataIndex: 'allowedDrinks', key: 'allowedDrinks' }
   ];
 
   return (
