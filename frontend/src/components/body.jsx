@@ -5,8 +5,8 @@ import DrinkForm from './drink-form';
 import DrinkTable from './drink-table';
 import useLocation from './location';
 import { kostadinEmail, ivanEmail } from '../constants/auth.constants';
+import { message } from 'antd';
 
-// Constants
 const MAX_ALLOWED_DRINKS = 12;
 
 function BodyComponent() {
@@ -19,6 +19,7 @@ function BodyComponent() {
   const [drinkNotes, setDrinkNotes] = useState('');
   const [tableData, setTableData] = useState([]);
   const location = useLocation();
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     let cancelRequest = false;
@@ -49,6 +50,11 @@ function BodyComponent() {
   const incrementDrink = async () => {
     try {
       await createDrink(drinkType, drinkNotes, location);
+      messageApi.open({
+        type: 'success',
+        content: `Successfully registered a ${drinkType.toLowerCase()}.`,
+        duration: 10,
+      });
       setDrinkNotes('');
       setTableData((prevCounters) =>
         prevCounters.map((counter) =>
@@ -61,7 +67,8 @@ function BodyComponent() {
   };
 
   return (
-    <div className="flex flex-col gap-6 items-center p-4 h-full justify-between">
+    <div className="flex flex-col gap-6 items-center p-4">
+      {contextHolder} {/* Render contextHolder here */}
       {loading ? (
         <p>Loading...</p>
       ) : (

@@ -9,7 +9,7 @@ const DrinkTable = ({ tableData, monthDisplay }) => {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="flex flex-col items-center flex-wrap justify-center gap-4">
       <span className="text-lg font-semibold">{monthDisplay}</span>
       <Table pagination={{ position: ['none', 'none'] }} columns={columns} dataSource={tableData} />
     </div>
