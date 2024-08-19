@@ -6,9 +6,8 @@ const drinkSchema = new Schema({
   type: { type: String, required: true },
   notes: { type: String, default: '' },
   location: {
-    longitude: { type: Number, required: true },
-    latitude: { type: Number, required: true },
-    error: { type: String }
+    longitude: { type: Number, default: null },
+    latitude: { type: Number, default: null },
   }
 });
 
