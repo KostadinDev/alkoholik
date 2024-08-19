@@ -53,7 +53,7 @@ function BodyComponent() {
       messageApi.open({
         type: 'success',
         content: `Successfully registered a ${drinkType.toLowerCase()}.`,
-        duration: 10,
+        duration: 5,
       });
       setDrinkNotes('');
       setTableData((prevCounters) =>

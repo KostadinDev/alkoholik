@@ -12,7 +12,7 @@ const app = express();
 
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors({ origin: true, credentials: true })); // Allow all origins
+app.use(cors({ origin: "https://alkoholik.onrender.com", credentials: true })); // Allow all origins
 app.use(morgan("dev"));
 
 // Use the drink routes

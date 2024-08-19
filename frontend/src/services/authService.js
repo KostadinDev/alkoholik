@@ -30,6 +30,7 @@ export const handleLoginSuccess = async (token) => {
 export const handleLogout = async () => {
   try {
     await axios.post(`${BASE_URL}/auth/logout`, {}, { withCredentials: true });
+    localStorage.removeItem('token');
   } catch (error) {
     console.error('Error during logout:', error);
   }
