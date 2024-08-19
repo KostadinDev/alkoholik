@@ -6,7 +6,7 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export const authenticateToken = (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.query.token;
   console.log(token);
   if (!token) {
     return res.status(401).send('No token provided 1');

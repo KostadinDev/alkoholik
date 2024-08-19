@@ -1,12 +1,11 @@
 import axios from 'axios';
 
 // Base URL for API requests
-const BASE_URL = 'https://alkoholik-backend.onrender.com/api';
-
+const BASE_URL = `https://alkoholik-backend.onrender.com/api`;
 // Helper function to handle GET requests
 export const fetchData = async (endpoint, params = {}) => {
   try {
-    const response = await axios.get(`${BASE_URL}/${endpoint}`, { params, withCredentials: true });
+    const response = await axios.get(`${BASE_URL}/${endpoint}?token=${localStorage.getItem('token')}`, { params, withCredentials: true });
     return response.data;
   } catch (error) {
     console.error(`There was an error fetching data from ${endpoint}:`, error);
@@ -17,7 +16,7 @@ export const fetchData = async (endpoint, params = {}) => {
 // Helper function to handle POST requests
 export const postData = async (endpoint, data = {}) => {
   try {
-    const response = await axios.post(`${BASE_URL}/${endpoint}`, data, { withCredentials: true });
+    const response = await axios.post(`${BASE_URL}/${endpoint}?token=${localStorage.getItem('token')}`, data, { withCredentials: true });
     return response.data;
   } catch (error) {
     console.error(`There was an error posting data to ${endpoint}:`, error);

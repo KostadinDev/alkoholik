@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 const BASE_URL = `https://alkoholik-backend.onrender.com/api`;
 export const fetchUser = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/auth/user`, { withCredentials: true });
+    const response = await axios.get(`${BASE_URL}/auth/user?token=${localStorage.getItem('token')}`, { withCredentials: true });
     return response?.data?.user;
   } catch (error) {
     console.error('Error fetching user:', error);
@@ -16,8 +16,9 @@ export const fetchUser = async () => {
 // Function to handle login success
 export const handleLoginSuccess = async (token) => {
   try {
-    await axios.post(`${BASE_URL}/auth/google`, { token }, { withCredentials: true });
+    const res = await axios.post(`${BASE_URL}/auth/google`, { token }, { withCredentials: true });
     const decoded = jwtDecode(token);
+    localStorage.setItem('token', res?.data?.token);
     return decoded;
   } catch (error) {
     console.error('Error during login:', error);

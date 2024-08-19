@@ -58,10 +58,10 @@ class AuthController {
       res.cookie('token', appToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
+        sameSite: 'none',
       });
 
-      res.status(200).send('Login successful');
+      res.status(200).send({ token: appToken });
     } catch (error) {
       console.error('error', error);
       res.status(401).send('Invalid token');
@@ -69,7 +69,7 @@ class AuthController {
   }
 
   getUser(req, res) {
-    const token = req.cookies.token;
+    const token = req.query.token;
 
     if (!token) {
       res.status(401).send('No token provided');
