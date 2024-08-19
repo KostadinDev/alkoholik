@@ -4,7 +4,7 @@ import { useUser } from "../context/user.context";
 import DrinkForm from './drink-form';
 import DrinkTable from './drink-table';
 import useLocation from './location';
-import { kostadinEmail, ivanEmail } from '../constants/auth.constants';
+import { kostadinEmail, ivanEmail, boyanEmail } from '../constants/auth.constants';
 import { message } from 'antd';
 
 const MAX_ALLOWED_DRINKS = 12;
@@ -27,13 +27,15 @@ function BodyComponent() {
     const loadDrinkCounts = async () => {
       setLoading(true);
       try {
-        const ivanDrinks = await fetchDrinksByUser('Ivan', monthForApi);
+        const ivanDrinks = await fetchDrinksByUser(ivanEmail, monthForApi);
         const kostaDrinks = await fetchDrinksByUser(kostadinEmail, monthForApi);
+        const boyanDrinks = await fetchDrinksByUser(boyanEmail, monthForApi);
 
         if (!cancelRequest) {
           setTableData([
             { key: '1', email: ivanEmail, name: 'Ivan', drinks: ivanDrinks?.length, allowedDrinks: MAX_ALLOWED_DRINKS },
-            { key: '2', email: kostadinEmail, name: 'Kostadin', drinks: kostaDrinks?.length, allowedDrinks: MAX_ALLOWED_DRINKS }
+            { key: '2', email: kostadinEmail, name: 'Kostadin', drinks: kostaDrinks?.length, allowedDrinks: MAX_ALLOWED_DRINKS },
+            { key: '3', email: boyanEmail, name: 'Boyan', drinks: boyanDrinks?.length, allowedDrinks: MAX_ALLOWED_DRINKS },
           ]);
         }
       } catch (err) {
